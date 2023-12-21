@@ -1,7 +1,12 @@
 import "./App.css";
+import LoginScreen from "./loginScreen/LoginScreen";
 
 function App() {
-  return <div>Hello world!!!</div>;
+  return (
+    <div>
+      <LoginScreen/>
+    </div>
+  );
 }
 
 export default App;
