@@ -3,6 +3,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
+ admin login : UserName mail = onosadmin@email.com ; password = 123456
 
 In the project directory, you can run:
 

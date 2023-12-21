@@ -1,34 +1,40 @@
-// import React from 'react'
-
-// export default function LoginScreen() {
-//   return (
-//     <div style={{flex:1, flexDirection:'row' , justifyContent:'center', backgroundColor:'red'}}>
-     
-//       <div style={{width:500, height:300, backgroundColor:'blue', left:500}}></div>  
-//     </div>
-    
-//   )
-// }
-
-import React, { useState } from 'react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import React, { useState, useEffect , Button} from 'react';
+import {auth} from '../firebase-config';
+import { onAuthStateChanged } from 'firebase/auth';
 
 const LoginScreen = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  const handleLogin = () => {
-    // Perform authentication logic here (e.g., API call)
-    // For simplicity, just checking if both username and password are non-empty
-    // if (username.trim() !== '' && password.trim() !== '') {
-    //   setLoggedIn(true);
-    // } else {
-    //   alert('Please enter a valid username and password.');
-    // }
-
-    console.log(username, password);
-    
+  const [loggedIn, setLoggedIn] = useState();
+  
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setLoggedIn(true);
+      } else {
+        setLoggedIn(false);
+      }
+    });
+    // Clean up the observer when the component unmounts
+    return () => unsubscribe();
+  }, []); // Empty dependency array to run the effect once on mount
+  
+  const handleLogin = async () => {
+    try{
+      const user = await signInWithEmailAndPassword(auth, username, password);
+      console.log('loging successful');
+      setLoggedIn(true);
+    }
+    catch(error){
+      console.log(error);
+    } 
   };
+
+  const logout = async () => {
+    auth.signOut();
+    setLoggedIn(false);
+  }
 
 
   const cardStyle = {
@@ -37,7 +43,7 @@ const LoginScreen = () => {
     borderRadius: '8px',
     boxShadow: '0 6px 10px rgba(0, 0, 0, 0.1)',
     margin: 'auto',
-    marginTop: '20%',
+    marginTop: '15%',
     textAlign: 'center',
     backgroundColor: 'grey',
     alignContent:'center',
@@ -51,6 +57,7 @@ const LoginScreen = () => {
         <div>
           <h2>Welcome, {username}!</h2>
           {/* Display user dashboard or other content after successful login */}
+          <button type="button" onClick={logout} > Logout </button>
         </div>
       ) : (
         <div style={{alignSelf:'center'}}>
