@@ -1,42 +1,46 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import React, { useState, useEffect , Button} from 'react';
-import {auth} from '../firebase-config';
-import { onAuthStateChanged } from 'firebase/auth';
+import React, { useState, useEffect } from 'react';
+import authService from '../AuthSerice';
 
 const LoginScreen = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState();
-  
+
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = authService.onAuthStateChanged((user) => {
       if (user) {
         setLoggedIn(true);
       } else {
         setLoggedIn(false);
       }
     });
+
     // Clean up the observer when the component unmounts
     return () => unsubscribe();
   }, []); // Empty dependency array to run the effect once on mount
-  
+
   const handleLogin = async () => {
-    try{
-      const user = await signInWithEmailAndPassword(auth, username, password);
-      console.log('loging successful');
+    console.log(username, password);
+    try {
+      await authService.login(username, password);
+      console.log('Login successful');
       setLoggedIn(true);
+    } catch (error) {
+      console.log('Login failed:', error.message);
     }
-    catch(error){
-      console.log(error);
-    } 
   };
 
-  const logout = async () => {
-    auth.signOut();
-    setLoggedIn(false);
-  }
+  const handleLogout = async () => {
+    try {
+      await authService.logout();
+      console.log('Logout successful');
+      setLoggedIn(false);
+    } catch (error) {
+      console.log('Logout failed:', error.message);
+    }
+  };
 
-
+  // Rest of your component code...
   const cardStyle = {
     width: '400px',
     padding: '20px',
@@ -57,7 +61,7 @@ const LoginScreen = () => {
         <div>
           <h2>Welcome, {username}!</h2>
           {/* Display user dashboard or other content after successful login */}
-          <button type="button" onClick={logout} > Logout </button>
+          <button type="button" onClick={handleLogout} > Logout </button>
         </div>
       ) : (
         <div style={{alignSelf:'center'}}>
@@ -99,4 +103,3 @@ const LoginScreen = () => {
 };
 
 export default LoginScreen;
-
