@@ -1,11 +1,11 @@
-import "./App.css";
-import LoginScreen from "./loginScreen/LoginScreen";
+import Homepage from "./containers/Homepage/Homepage";
+import { Box } from "@mui/material";
 
 function App() {
   return (
-    <div>
-      <LoginScreen/>
-    </div>
+    <Box>
+      <Homepage />
+    </Box>
   );
 }
 
