@@ -18,6 +18,8 @@ import Button from "@mui/material/Button";
 const drawerWidth = 240;
 const navItems = ["Settings", "Log Out"];
 
+// const image = process.env.PUBLIC_URL + "Images/router.jpg";
+
 const Header = (props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -106,7 +108,6 @@ const Header = (props) => {
       </nav>
       <Box component="main" sx={{ p: 3, color: "#DDE6ED" }}>
         <Toolbar />
-        <Typography>Home Page is Here</Typography>
       </Box>
     </Box>
   );
