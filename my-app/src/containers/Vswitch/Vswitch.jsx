@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
 import GetAppIcon from "@mui/icons-material/GetApp";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import {
   Card,
@@ -23,6 +24,9 @@ const Vswitch = () => {
   const navigate = useNavigate();
   const handleCreateButton = () => {
     navigate("/queueform");
+  };
+  const handleHomeButton = () => {
+    navigate("/home");
   };
   return (
     <Box
@@ -79,6 +83,7 @@ const Vswitch = () => {
                       fontSize: "16px",
                       fontWeight: 800,
                       borderRadius: "10px",
+                      textTransform: "none",
                       "&:hover": {
                         backgroundColor: "#DDE6ED",
                         color: "#27374D",
@@ -98,6 +103,7 @@ const Vswitch = () => {
                       fontSize: "16px",
                       fontWeight: 800,
                       borderRadius: "10px",
+                      textTransform: "none",
                       "&:hover": {
                         backgroundColor: "#DDE6ED",
                         color: "#27374D",
@@ -117,6 +123,7 @@ const Vswitch = () => {
                       fontSize: "16px",
                       fontWeight: 800,
                       borderRadius: "10px",
+                      textTransform: "none",
                       "&:hover": {
                         backgroundColor: "#DDE6ED",
                         color: "#27374D",
@@ -126,6 +133,26 @@ const Vswitch = () => {
                     Delete Queue
                   </Button>
                 </Stack>
+                <Button
+                  onClick={handleHomeButton}
+                  size="small"
+                  variant="text"
+                  startIcon={<ArrowBackIcon />}
+                  sx={{
+                    marginTop: "20px",
+                    color: "#27374D",
+                    fontFamily: "public sans",
+                    fontSize: "16px",
+                    fontWeight: 800,
+                    borderRadius: "10px",
+                    textTransform: "none",
+                    "&:hover": {
+                      color: "#DDE6ED",
+                    },
+                  }}
+                >
+                  Home
+                </Button>
               </CardContent>
             </Card>
           </Grid>

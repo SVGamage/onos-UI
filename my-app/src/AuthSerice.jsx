@@ -1,7 +1,12 @@
 // authService.js
 
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
-import { auth } from './firebase-config';
+import {
+  // getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { auth } from "./firebase-config";
 
 const authService = {
   // Function for handling user login
