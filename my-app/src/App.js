@@ -1,11 +1,16 @@
-import Homepage from "./containers/Homepage/Homepage";
-import { Box } from "@mui/material";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import routes from "./routes";
 
 function App() {
   return (
-    <Box>
-      <Homepage />
-    </Box>
+    <Router>
+      <Routes>
+        {routes.map((route) => (
+          <Route key={route.id} path={route.path} element={route.element} />
+        ))}
+        ;
+      </Routes>
+    </Router>
   );
 }
 
