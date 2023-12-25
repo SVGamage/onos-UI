@@ -4,6 +4,7 @@ import Header from "../../components/Header/Header";
 import { Toolbar, useMediaQuery } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
+
 import {
   Card,
   CardContent,
@@ -17,6 +18,7 @@ const image = process.env.PUBLIC_URL + "Images/router.jpg";
 const Homepage = () => {
   const isMobile = useMediaQuery("(max-width: 650px)");
   const navigate = useNavigate();
+
   const handleCardClick = () => {
     navigate("/vswitch");
   };

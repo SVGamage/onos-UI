@@ -1,10 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import authService from '../AuthSerice';
+import React, { useState, useEffect } from "react";
+import authService from "../AuthSerice";
+import { useNavigate } from "react-router-dom";
+import {
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  TextField,
+  Grid,
+  Box,
+} from "@mui/material";
 
 const LoginScreen = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState();
+  const [usernamError, setUsernameError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [loginError, setLoginError] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = authService.onAuthStateChanged((user) => {
@@ -19,86 +34,217 @@ const LoginScreen = () => {
     return () => unsubscribe();
   }, []); // Empty dependency array to run the effect once on mount
 
-  const handleLogin = async () => {
-    console.log(username, password);
-    try {
-      await authService.login(username, password);
-      console.log('Login successful');
-      setLoggedIn(true);
-    } catch (error) {
-      console.log('Login failed:', error.message);
-    }
-  };
-
   const handleLogout = async () => {
     try {
       await authService.logout();
-      console.log('Logout successful');
+      console.log("Logout successful");
       setLoggedIn(false);
     } catch (error) {
-      console.log('Logout failed:', error.message);
+      console.log("Logout failed:", error.message);
     }
   };
 
-  // Rest of your component code...
-  const cardStyle = {
-    width: '400px',
-    padding: '20px',
-    borderRadius: '8px',
-    boxShadow: '0 6px 10px rgba(0, 0, 0, 0.1)',
-    margin: 'auto',
-    marginTop: '15%',
-    textAlign: 'center',
-    backgroundColor: 'grey',
-    alignContent:'center',
-    alignItems:'center',
+  const handleLogin = async (event) => {
+    console.log(username, password);
+    event.preventDefault();
+    setPasswordError(false);
+    setUsernameError(false);
+
+    if (username === "") {
+      setUsernameError(true);
+    }
+    if (password === "") {
+      setPasswordError(true);
+    }
+    if (username && password) {
+      try {
+        await authService.login(username, password);
+        navigate("/home");
+        setLoggedIn(true);
+      } catch (error) {
+        console.log("Login failed:", error.message);
+        setLoginError(true);
+      }
+    }
   };
 
-
   return (
-    <div style={cardStyle}>
-      {loggedIn ? (
-        <div>
-          <h2>Welcome, {username}!</h2>
-          {/* Display user dashboard or other content after successful login */}
-          <button type="button" onClick={handleLogout} > Logout </button>
-        </div>
-      ) : (
-        <div style={{alignSelf:'center'}}>
-          <h2>SDN Controller</h2>
-            <h3>Login</h3>
-          <form>
-            <div style={{padding:10}}>
-                <label>
-                Username:
-                <input
-                    type="text"
+    <Box
+      sx={{
+        height: "100vh",
+        width: "100%",
+        display: "grid",
+        justifyContent: "center",
+        alignItems: "center",
+        margin: 0,
+      }}
+    >
+      <Card
+        style={{
+          maxWidth: 345,
+          backgroundColor: "#DDE6ED",
+          boxShadow: " 1px 1px 5px 0px rgb(39, 55, 77, 0.5)",
+        }}
+      >
+        <CardContent>
+          {loggedIn ? (
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs={12}>
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontFamily: "public sans",
+                    fontWeight: 600,
+                    color: "#27374D",
+                  }}
+                >
+                  Logout window
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography
+                  variant="subtitle"
+                  sx={{
+                    fontFamily: "public sans",
+                    fontWeight: 600,
+                    color: "#27374D",
+                  }}
+                >
+                  Click here to Log Out...
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  size="small"
+                  variant="contained"
+                  onClick={handleLogout}
+                  disableElevation
+                  sx={{
+                    backgroundColor: "#27374D",
+                    color: "#DDE6ED",
+                    fontFamily: "public sans",
+                    fontSize: "16px",
+                    fontWeight: 800,
+                    borderRadius: "10px",
+                    textTransform: "none",
+                    "&:hover": {
+                      backgroundColor: "#526D82",
+                      color: "#DDE6ED",
+                      fontWeight: 900,
+                    },
+                  }}
+                >
+                  Logout
+                </Button>
+              </Grid>
+            </Grid>
+          ) : (
+            <form>
+              <Typography
+                variant="h4"
+                align="center"
+                sx={{
+                  fontFamily: "public sans",
+                  fontWeight: 800,
+                  color: "#27374D",
+                }}
+              >
+                SDN Controller
+              </Typography>
+              <Typography
+                variant="h5"
+                align="center"
+                sx={{
+                  fontFamily: "public sans",
+                  fontWeight: 600,
+                  color: "#27374D",
+                }}
+              >
+                Login
+              </Typography>
+              <Grid
+                container
+                spacing={3}
+                sx={{
+                  "@media (max-width: 600px)": {
+                    flexDirection: "column",
+                    alignItems: "center",
+                  },
+                  marginTop: "10px",
+                }}
+              >
+                <Grid item xs={12}>
+                  <TextField
+                    size="small"
                     value={username}
-                    placeholder='Username'
                     onChange={(e) => setUsername(e.target.value)}
-                />
-                </label>
-            </div>
-            
-            <div style={{padding:10}}>
-            <label>
-              Password:
-              <input
-                type="password"
-                value={password}
-                placeholder='Password'
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </label>
-            </div>
-
-            <button type="button" onClick={handleLogin} style={{padding:5}}>
-              Login
-            </button>
-          </form>
-        </div>
-      )}
-    </div>
+                    placeholder="Username"
+                    fullWidth
+                    required
+                    variant="outlined"
+                    error={usernamError}
+                    helperText={usernamError ? "Username is required" : ""}
+                    sx={{
+                      fontFamily: "public sans",
+                      color: "#27374D",
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    size="small"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password"
+                    fullWidth
+                    required
+                    variant="outlined"
+                    error={passwordError}
+                    helperText={passwordError ? "Password is required" : ""}
+                    sx={{
+                      fontFamily: "public sans",
+                      color: "#27374D",
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} marginTop="10px">
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    onClick={handleLogin}
+                    disableElevation
+                    sx={{
+                      backgroundColor: "#27374D",
+                      color: "#DDE6ED",
+                      fontFamily: "public sans",
+                      fontSize: "16px",
+                      fontWeight: 800,
+                      borderRadius: "10px",
+                      textTransform: "none",
+                      "&:hover": {
+                        backgroundColor: "#526D82",
+                        color: "#DDE6ED",
+                        fontWeight: 900,
+                      },
+                    }}
+                  >
+                    Login
+                  </Button>
+                </Grid>
+              </Grid>
+              {loginError && (
+                <Grid item xs={12}>
+                  <Typography color="error" variant="body1">
+                    Invalid username or password. Please try again.
+                  </Typography>
+                </Grid>
+              )}
+            </form>
+          )}
+        </CardContent>
+      </Card>
+    </Box>
   );
 };
 
