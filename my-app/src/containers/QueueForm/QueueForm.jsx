@@ -182,7 +182,7 @@ const QueueForm = () => {
                         },
                       }}
                     >
-                      Cancle
+                      Cancel
                     </Button>
                   </Stack>
                 </form>

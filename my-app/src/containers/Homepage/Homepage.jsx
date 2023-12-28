@@ -22,6 +22,9 @@ const Homepage = () => {
   const handleCardClick = () => {
     navigate("/vswitch");
   };
+  const handleGetDevices = () => {
+    navigate("/getDevices");
+  }
   return (
     <Box
       sx={{
@@ -39,7 +42,31 @@ const Homepage = () => {
           justifyContent="center"
           alignItems="center"
           s
-        >
+        ><Grid item>
+        <Card sx={{ maxWidth: 345, backgroundColor: "#9DB2BF" }}>
+          <CardActionArea onClick={handleGetDevices}>
+            <CardMedia
+              component="img"
+              height="150"
+              image={image}
+              alt="router"
+            />
+            <CardContent>
+              <Typography
+                gutterBottom
+                variant="h5"
+                component="div"
+                color="#27374D"
+              >
+                Current Active Devices
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Manage current devices active in the Network
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      </Grid>
           <Grid item>
             <Card sx={{ maxWidth: 345, backgroundColor: "#9DB2BF" }}>
               <CardActionArea onClick={handleCardClick}>
