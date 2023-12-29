@@ -28,6 +28,10 @@ const Homepage = () => {
   const handleGetPorts = () => {
     navigate("/ports");
   };
+
+  const handleGetFlows = () => {
+    navigate("/flows");
+  }
   return (
     <Box
       sx={{
@@ -125,7 +129,7 @@ const Homepage = () => {
           </Grid>
           <Grid item>
             <Card sx={{ maxWidth: 345, backgroundColor: "#9DB2BF" }}>
-              <CardActionArea>
+              <CardActionArea onClick={handleGetFlows}>
                 <CardMedia
                   component="img"
                   height="150"
@@ -139,10 +143,10 @@ const Homepage = () => {
                     component="div"
                     color="#27374D"
                   >
-                    Router
+                    Flows
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Connects and routes traffic between different networks
+                    View, Add and manage flow rules in the system
                   </Typography>
                 </CardContent>
               </CardActionArea>

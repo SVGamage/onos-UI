@@ -6,6 +6,8 @@ import GetDevices from "./containers/GetDevices/GetDevices";
 import GetDevice from "./containers/GetDevice/GetDevice";
 import GetPorts from "./containers/GetPorts/GetPorts";
 import GetPort from "./containers/GetPort/GetPort";
+import Flows from "./containers/Flows/Flows";
+import AddFlow from "./containers/Flows/AddFlow";
 const routes = [
   {
     id: 1,
@@ -46,6 +48,16 @@ const routes = [
     id: 8,
     path: "/port/:id",
     element: <GetPort />,
+  },
+  {
+    id: 9,
+    path: "/flows",
+    element: <Flows />,
+  },
+  {
+    id: 10,
+    path: "/flow/add",
+    element: <AddFlow />,
   }
 
 ];
