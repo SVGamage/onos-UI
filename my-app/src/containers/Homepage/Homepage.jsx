@@ -23,8 +23,11 @@ const Homepage = () => {
     navigate("/vswitch");
   };
   const handleGetDevices = () => {
-    navigate("/getDevices");
-  }
+    navigate("/devices");
+  };
+  const handleGetPorts = () => {
+    navigate("/ports");
+  };
   return (
     <Box
       sx={{
@@ -42,33 +45,61 @@ const Homepage = () => {
           justifyContent="center"
           alignItems="center"
           s
-        ><Grid item>
-        <Card sx={{ maxWidth: 345, backgroundColor: "#9DB2BF" }}>
-          <CardActionArea onClick={handleGetDevices}>
-            <CardMedia
-              component="img"
-              height="150"
-              image={image}
-              alt="router"
-            />
-            <CardContent>
-              <Typography
-                gutterBottom
-                variant="h5"
-                component="div"
-                color="#27374D"
-              >
-                Current Active Devices
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Manage current devices active in the Network
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
-      </Grid>
+        >
           <Grid item>
-            <Card sx={{ maxWidth: 345, backgroundColor: "#9DB2BF" }}>
+            <Card sx={{ width: 345, backgroundColor: "#9DB2BF" }}>
+              <CardActionArea onClick={handleGetDevices}>
+                <CardMedia
+                  component="img"
+                  height="150"
+                  image={image}
+                  alt="router"
+                />
+                <CardContent>
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="div"
+                    color="#27374D"
+                  >
+                    Current Active Devices
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Manage current devices active in the Network
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+
+          <Grid item>
+            <Card sx={{ width: 345, backgroundColor: "#9DB2BF" }}>
+              <CardActionArea onClick={handleGetPorts}>
+                <CardMedia
+                  component="img"
+                  height="150"
+                  image={image}
+                  alt="router"
+                />
+                <CardContent>
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="div"
+                    color="#27374D"
+                  >
+                    Device Ports
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Port details of all infrastructure devices
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+
+          <Grid item>
+            <Card sx={{ width: 345, backgroundColor: "#9DB2BF" }}>
               <CardActionArea onClick={handleCardClick}>
                 <CardMedia
                   component="img"
@@ -86,8 +117,7 @@ const Homepage = () => {
                     V Switch
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Manages virtual network traffic within a virtualized
-                    environment
+                    Manages virtual network traffic 
                   </Typography>
                 </CardContent>
               </CardActionArea>
@@ -113,31 +143,6 @@ const Homepage = () => {
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     Connects and routes traffic between different networks
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
-          <Grid item>
-            <Card sx={{ maxWidth: 345, backgroundColor: "#9DB2BF" }}>
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  height="150"
-                  image={image}
-                  alt="router"
-                />
-                <CardContent>
-                  <Typography
-                    gutterBottom
-                    variant="h5"
-                    component="div"
-                    color="#27374D"
-                  >
-                    Physical Switch
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Forwards traffic efficiently within a single network
                   </Typography>
                 </CardContent>
               </CardActionArea>
