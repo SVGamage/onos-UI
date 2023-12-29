@@ -25,47 +25,45 @@ const image = process.env.PUBLIC_URL + "Images/router2.jpg";
 
 function GetPort() {
   const { id } = useParams();
-  const [port, setPort] = React.useState(
-    {
-        "id": "of:0000000000000003",
-        "type": "SWITCH",
-        "available": true,
-        "role": "MASTER",
-        "mfr": "Nicira, Inc.",
-        "hw": "Open vSwitch",
-        "sw": "2.17.8",
-        "serial": "None",
-        "driver": "ovs",
-        "chassisId": "3",
-        "lastUpdate": "1703827350747",
-        "humanReadableLastUpdate": "connected 11m9s ago",
-        "annotations": {
-          "channelId": "127.0.0.1:44534",
-          "datapathDescription": "s3",
-          "managementAddress": "127.0.0.1",
-          "protocol": "OF_13"
+  const [port, setPort] = React.useState({
+    id: "of:0000000000000003",
+    type: "SWITCH",
+    available: true,
+    role: "MASTER",
+    mfr: "Nicira, Inc.",
+    hw: "Open vSwitch",
+    sw: "2.17.8",
+    serial: "None",
+    driver: "ovs",
+    chassisId: "3",
+    lastUpdate: "1703827350747",
+    humanReadableLastUpdate: "connected 11m9s ago",
+    annotations: {
+      channelId: "127.0.0.1:44534",
+      datapathDescription: "s3",
+      managementAddress: "127.0.0.1",
+      protocol: "OF_13",
+    },
+    ports: [
+      {
+        element: "of:0000000000000003",
+        port: "local",
+        isEnabled: false,
+        type: "copper",
+        portSpeed: 0,
+        annotations: {
+          adminState: "disabled",
+          portMac: "96:3d:6a:68:a1:49",
+          portName: "s3",
         },
-        "ports": [
-          {
-            "element": "of:0000000000000003",
-            "port": "local",
-            "isEnabled": false,
-            "type": "copper",
-            "portSpeed": 0,
-            "annotations": {
-              "adminState": "disabled",
-              "portMac": "96:3d:6a:68:a1:49",
-              "portName": "s3"
-            }
-          }
-        ]
-      }
-  );
+      },
+    ],
+  });
 
   const [enabled, setEnabled] = React.useState(port.ports[0].isEnabled);
   const streamData = {
     enabled: !enabled,
-  }
+  };
   console.log(enabled);
   const isMobile = useMediaQuery("(max-width: 650px)");
   const navigate = useNavigate();
@@ -81,7 +79,7 @@ function GetPort() {
     navigate("/home");
   };
 
-    const handleEnableButton = () => {
+  const handleEnableButton = () => {
     // axios
     //   .post(`${URL}/devices/${id}/portstate/${id}`, {
     //     streamData
@@ -94,10 +92,10 @@ function GetPort() {
     //     .catch((error) => {
     //         console.log(error);
     //     });
-    setEnabled(!enabled); 
-    }    
+    setEnabled(!enabled);
+  };
 
-    return (
+  return (
     <Box
       sx={{
         backgroundColor: "#27374D",
@@ -206,7 +204,7 @@ function GetPort() {
                   Port Name:
                   <Typography color="text.primary" sx={{ marginLeft: 2 }}>
                     {" "}
-                    {port.ports[0].annotations.portName}    
+                    {port.ports[0].annotations.portName}
                   </Typography>
                 </Typography>
 
@@ -224,7 +222,7 @@ function GetPort() {
                   Port:
                   <Typography color="text.primary" sx={{ marginLeft: 2 }}>
                     {" "}
-                    {enabled ? "Enabled" : "Disabled"}    
+                    {enabled ? "Enabled" : "Disabled"}
                   </Typography>
                 </Typography>
 
@@ -242,18 +240,17 @@ function GetPort() {
                   Port Type:
                   <Typography color="text.primary" sx={{ marginLeft: 2 }}>
                     {" "}
-                    {port.ports[0].port}    
+                    {port.ports[0].port}
                   </Typography>
                 </Typography>
 
-                <Stack spacing={3} marginBottom={2} marginTop={3}>
-                </Stack>
+                <Stack spacing={3} marginBottom={2} marginTop={3}></Stack>
                 {/* Have a button to enable or diable the port*/}
                 <Stack spacing={3} marginBottom={2} marginTop={3}>
                   <Button
                     variant="contained"
                     startIcon={<CreateIcon />}
-                    onClick = {handleEnableButton}
+                    onClick={handleEnableButton}
                     disableElevation
                     sx={{
                       backgroundColor: "#27374D",
@@ -269,9 +266,7 @@ function GetPort() {
                       },
                     }}
                   >
-                    {
-                        enabled ? "Disable" : "Enable"
-                    } Port
+                    {enabled ? "Disable" : "Enable"} Port
                   </Button>
                 </Stack>
                 <Button

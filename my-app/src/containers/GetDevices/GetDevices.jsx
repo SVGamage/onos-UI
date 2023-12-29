@@ -16,92 +16,7 @@ const GetDevices = () => {
   const isMobile = useMediaQuery("(max-width: 650px)");
   const navigate = useNavigate();
 
-  const [devices, setDevices] = React.useState(
-    {
-      "devices": [
-        {
-          "id": "of:0000000000000003",
-          "type": "SWITCH",
-          "available": true,
-          "role": "MASTER",
-          "mfr": "Nicira, Inc.",
-          "hw": "Open vSwitch",
-          "sw": "2.17.8",
-          "serial": "None",
-          "driver": "ovs",
-          "chassisId": "3",
-          "lastUpdate": "1703688367996",
-          "humanReadableLastUpdate": "connected 10h7m ago",
-          "annotations": {
-            "channelId": "127.0.0.1:46954",
-            "datapathDescription": "s3",
-            "managementAddress": "127.0.0.1",
-            "protocol": "OF_13"
-          }
-        },
-        {
-          "id": "of:0000000000000004",
-          "type": "SWITCH",
-          "available": true,
-          "role": "MASTER",
-          "mfr": "Nicira, Inc.",
-          "hw": "Open vSwitch",
-          "sw": "2.17.8",
-          "serial": "None",
-          "driver": "ovs",
-          "chassisId": "4",
-          "lastUpdate": "1703688367997",
-          "humanReadableLastUpdate": "connected 10h7m ago",
-          "annotations": {
-            "channelId": "127.0.0.1:46940",
-            "datapathDescription": "s4",
-            "managementAddress": "127.0.0.1",
-            "protocol": "OF_13"
-          }
-        },
-        {
-          "id": "of:0000000000000001",
-          "type": "SWITCH",
-          "available": true,
-          "role": "MASTER",
-          "mfr": "Nicira, Inc.",
-          "hw": "Open vSwitch",
-          "sw": "2.17.8",
-          "serial": "None",
-          "driver": "ovs",
-          "chassisId": "1",
-          "lastUpdate": "1703688367996",
-          "humanReadableLastUpdate": "connected 10h7m ago",
-          "annotations": {
-            "channelId": "127.0.0.1:46936",
-            "datapathDescription": "s1",
-            "managementAddress": "127.0.0.1",
-            "protocol": "OF_13"
-          }
-        },
-        {
-          "id": "of:0000000000000002",
-          "type": "SWITCH",
-          "available": true,
-          "role": "MASTER",
-          "mfr": "Nicira, Inc.",
-          "hw": "Open vSwitch",
-          "sw": "2.17.8",
-          "serial": "None",
-          "driver": "ovs",
-          "chassisId": "2",
-          "lastUpdate": "1703688367997",
-          "humanReadableLastUpdate": "connected 10h7m ago",
-          "annotations": {
-            "channelId": "127.0.0.1:46958",
-            "datapathDescription": "s2",
-            "managementAddress": "127.0.0.1",
-            "protocol": "OF_13"
-          }
-        }
-      ]
-    }
-  );
+  const [devices, setDevices] = React.useState([]);
   const handleHomeButton = () => {
     navigate("/home");
   };
@@ -109,26 +24,71 @@ const GetDevices = () => {
   const handleDeleteButton = (id) => {
     console.log(id);
     console.log("Device Deleted");
-    // axios
-    //   .delete(`${URL}/devices/${id}`)
-    //   .then((res) => {
-    //     console.log(res);
-    //     console.log(res.data);
-    //   });
+    axios.delete(`${URL}/devices/${id}`).then((res) => {
+      console.log(res);
+      console.log(res.data);
+    });
   };
+  async function fetchData() {
+    try {
+      // Make an asynchronous Axios request
+      const response = await axios.get(`${URL}/devices`);
+
+      // Access the response data
+      console.log("this", response.data);
+
+      // You can return the data or do any other processing here
+      return response.data.devices;
+    } catch (error) {
+      // Handle errors
+      console.error("Error fetching data:", error.message);
+      throw error; // You can rethrow the error or handle it in another way
+    }
+  }
+
+  // // Call the function
+  // fetchData()
+  //   .then((data) => {
+  //     // Do something with the data
+  //     setDevices(data);
+  //     console.log("Data:", data);
+  //   })
+  //   .catch((error) => {
+  //     // Handle errors from the fetchData function
+  //     console.error("Error in fetchData:", error.message);
+  //   });
 
   React.useEffect(() => {
-    axios
-      .get(`${URL}/devices`)
-      .then((res) => {
-        console.log(res);
-        setDevices(res.data);
+    // await axios
+    //   .get(`${URL}/devices`, {
+    //     auth: {
+    //       username: "onos",
+    //       password: "rocks",
+    //     },
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //     setDevices(res.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+
+    // Call the function
+    fetchData()
+      .then((data) => {
+        // Do something with the data
+        setDevices(data);
+        console.log("Data:", data);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        // Handle errors from the fetchData function
+        console.error("Error in fetchData:", error.message);
       });
   }, []);
 
+  console.log(`URL:  ${URL}/devices`);
+  console.log("List of devices", devices);
   return (
     <Box
       sx={{
@@ -167,82 +127,85 @@ const GetDevices = () => {
 
                 <Stack spacing={3} marginBottom={2} marginTop={3}>
                   {/*  */}
-                  {devices.devices.map((device) => (
-                    <Box
-                      variant="contained"
-                      // startIcon={<CreateIcon />}
-                      disableElevation
-                      sx={{
-                        // center align text
-                        textAlign: "center",
-                        backgroundColor: "#27374D",
-                        color: "#DDE6ED",
-                        fontFamily: "public sans",
-                        fontSize: "12px",
-                        fontWeight: 800,
-                        borderRadius: "10px",
-                        textTransform: "none",
-                        // "&:hover": {
-                        //   backgroundColor: "#DDE6ED",
-                        //   color: "#27374D",
-                        // },
-                      }}
-                    >
-                     <Typography> Type: {device.type} <br />
-                      ID: {device.id}
-                      </Typography>
-                      {/* Add update and delete buttons on the right side of the box */}
-                      <Stack
-                        direction="row"
-                        spacing={1}
-                        justifyContent="center"
+                  {devices !== undefined &&
+                    devices.map((device) => (
+                      <Box
+                        variant="contained"
+                        // startIcon={<CreateIcon />}
+                        disableElevation
+                        sx={{
+                          // center align text
+                          textAlign: "center",
+                          backgroundColor: "#27374D",
+                          color: "#DDE6ED",
+                          fontFamily: "public sans",
+                          fontSize: "12px",
+                          fontWeight: 800,
+                          borderRadius: "10px",
+                          textTransform: "none",
+                          // "&:hover": {
+                          //   backgroundColor: "#DDE6ED",
+                          //   color: "#27374D",
+                          // },
+                        }}
                       >
-                        <Button
-                          variant="contained"
-                          startIcon={<CreateIcon />}
-                          onClick = {() => navigate(`/device/${device.id}`)}
-                          disableElevation
-                          sx={{
-                            backgroundColor: "#27374D",
-                            color: "#DDE6ED",
-                            fontFamily: "public sans",
-                            fontSize: "12px",
-                            fontWeight: 800,
-                            borderRadius: "10px",
-                            textTransform: "none",
-                            "&:hover": {
-                              backgroundColor: "#DDE6ED",
-                              color: "#27374D",
-                            },
-                          }}
+                        <Typography>
+                          {" "}
+                          Type: {device.type} <br />
+                          ID: {device.id}
+                        </Typography>
+                        {/* Add update and delete buttons on the right side of the box */}
+                        <Stack
+                          direction="row"
+                          spacing={1}
+                          justifyContent="center"
                         >
-                          View
-                        </Button>
-                        
-                        <Button
-                          variant="contained"
-                          startIcon={<DeleteIcon />}
-                          onClick={() => handleDeleteButton(device.id)}
-                          disableElevation
-                          sx={{
-                            backgroundColor: "#27374D",
-                            color: "#DDE6ED",
-                            fontFamily: "public sans",
-                            fontSize: "12px",
-                            fontWeight: 800,
-                            borderRadius: "10px",
-                            textTransform: "none",
-                            "&:hover": {
-                              backgroundColor: "#DDE6ED",
-                              color: "#27374D",
-                            },
-                          }}
-                        >
-                          Delete
-                        </Button>
-                      </Stack>
-                    </Box>
-                  ))}
+                          <Button
+                            variant="contained"
+                            startIcon={<CreateIcon />}
+                            onClick={() => navigate(`/device/${device.id}`)}
+                            disableElevation
+                            sx={{
+                              backgroundColor: "#27374D",
+                              color: "#DDE6ED",
+                              fontFamily: "public sans",
+                              fontSize: "12px",
+                              fontWeight: 800,
+                              borderRadius: "10px",
+                              textTransform: "none",
+                              "&:hover": {
+                                backgroundColor: "#DDE6ED",
+                                color: "#27374D",
+                              },
+                            }}
+                          >
+                            View
+                          </Button>
+
+                          <Button
+                            variant="contained"
+                            startIcon={<DeleteIcon />}
+                            onClick={() => handleDeleteButton(device.id)}
+                            disableElevation
+                            sx={{
+                              backgroundColor: "#27374D",
+                              color: "#DDE6ED",
+                              fontFamily: "public sans",
+                              fontSize: "12px",
+                              fontWeight: 800,
+                              borderRadius: "10px",
+                              textTransform: "none",
+                              "&:hover": {
+                                backgroundColor: "#DDE6ED",
+                                color: "#27374D",
+                              },
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </Stack>
+                      </Box>
+                    ))}
 
                   {/*  */}
                   <Button
