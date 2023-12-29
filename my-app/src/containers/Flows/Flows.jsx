@@ -583,7 +583,7 @@ const Flows = () => {
 
   React.useEffect(() => {
     axios
-      .get("http://localhost:8181/onos/v1/flows")
+      .get(`${URL}/flows`)
       .then((res) => {
         console.log(res);
         setFlows(res.data);

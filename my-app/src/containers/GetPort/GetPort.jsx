@@ -10,6 +10,7 @@ import GetAppIcon from "@mui/icons-material/GetApp";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { URL } from "../../helper";
 
 import {
   Card,
@@ -68,31 +69,32 @@ function GetPort() {
   console.log(enabled);
   const isMobile = useMediaQuery("(max-width: 650px)");
   const navigate = useNavigate();
-  React.useEffect(() => {
-    axios.get(`http://localhost:8181/onos/v1/ports/${id}`).then((res) => {
-      console.log(res);
-      console.log(res.data);
-      setPort(res.data);
-    });
-  }, []);
+  // React.useEffect(() => {
+  //   axios.get(`${URL}/ports/${id}`).then((res) => {
+  //     console.log(res);
+  //     console.log(res.data);
+  //     setPort(res.data);
+  //   });
+  // }, []);
 
   const handleHomeButton = () => {
     navigate("/home");
   };
 
     const handleEnableButton = () => {
-    axios
-      .post(`http://localhost:8181/onos/v1/devices/${id}/portstate/${id}`, {
-        streamData
-      })
-        .then((res) => {
-            console.log(streamData);
-            console.log(res);
-            console.log(res.data);
-        })
-        .catch((error) => {
-            console.log(error);
-        }); 
+    // axios
+    //   .post(`${URL}/devices/${id}/portstate/${id}`, {
+    //     streamData
+    //   })
+    //     .then((res) => {
+    //         console.log(streamData);
+    //         console.log(res);
+    //         console.log(res.data);
+    //     })
+    //     .catch((error) => {
+    //         console.log(error);
+    //     });
+    setEnabled(!enabled); 
     }    
 
     return (

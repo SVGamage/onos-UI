@@ -9,6 +9,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, Grid, Button, Stack } from "@mui/material";
+import { URL } from "../../helper";
 
 const GetPorts = () => {
   const isMobile = useMediaQuery("(max-width: 650px)");
@@ -195,17 +196,17 @@ const GetPorts = () => {
   const handleDeleteButton = (id) => {
     console.log(id);
     console.log("Device Deleted");
-    // axios
-    //   .delete(`http://localhost:8181/onos/v1/devices/${id}`)
-    //   .then((res) => {
-    //     console.log(res);
-    //     console.log(res.data);
-    //   });
+    axios
+      .delete(`${URL}/devices/ports/${id}`)
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+      });
   };
 
   React.useEffect(() => {
     axios
-      .get("http://localhost:8181/onos/v1/devices")
+      .get(`${URL}/devices/ports`)
       .then((res) => {
         console.log(res);
         setPorts(res.data);

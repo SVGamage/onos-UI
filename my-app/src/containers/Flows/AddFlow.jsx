@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardContent, Grid, Button, Stack } from "@mui/material";
 
 const defaultFlowData = {
-  priority: 40000,
+  priority: 5,
   timeout: 0,
   isPermanent: true,
   deviceId: 'of:0000000000000001',

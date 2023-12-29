@@ -11,6 +11,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import { URL } from "../../helper";
+
 import {
   Card,
   CardContent,
@@ -43,8 +45,9 @@ function GetDevice() {
   });
   const isMobile = useMediaQuery("(max-width: 650px)");
   const navigate = useNavigate();
+  console.log(`${URL}/devices/`);
   React.useEffect(() => {
-    // axios.get(`http://localhost:8181/onos/v1/devices/${id}`).then((res) => {
+    // axios.get(`${URL}/devices/${id}`).then((res) => {
     //   console.log(res);
     //   console.log(res.data);
     //   setDevice(res.data);
@@ -57,7 +60,7 @@ function GetDevice() {
 
     const handleDeleteButton = (id) => {
     // axios
-    //   .delete(`http://localhost:8181/onos/v1/devices/${id}`)
+    //   .delete(`${URL}/devices/${id}`)
     //   .then((res) => {
     //     console.log(res);
     //     console.log(res.data);

@@ -10,6 +10,7 @@ import GetAppIcon from "@mui/icons-material/GetApp";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, Grid, Button, Stack } from "@mui/material";
+import { URL } from "../../helper";
 
 const GetDevices = () => {
   const isMobile = useMediaQuery("(max-width: 650px)");
@@ -109,7 +110,7 @@ const GetDevices = () => {
     console.log(id);
     console.log("Device Deleted");
     // axios
-    //   .delete(`http://localhost:8181/onos/v1/devices/${id}`)
+    //   .delete(`${URL}/devices/${id}`)
     //   .then((res) => {
     //     console.log(res);
     //     console.log(res.data);
@@ -118,7 +119,7 @@ const GetDevices = () => {
 
   React.useEffect(() => {
     axios
-      .get("http://localhost:8181/onos/v1/devices")
+      .get(`${URL}/devices`)
       .then((res) => {
         console.log(res);
         setDevices(res.data);
@@ -217,26 +218,7 @@ const GetDevices = () => {
                         >
                           View
                         </Button>
-                        <Button
-                          variant="contained"
-                          startIcon={<CreateIcon />}
-                          disableElevation
-                          sx={{
-                            backgroundColor: "#27374D",
-                            color: "#DDE6ED",
-                            fontFamily: "public sans",
-                            fontSize: "12px",
-                            fontWeight: 800,
-                            borderRadius: "10px",
-                            textTransform: "none",
-                            "&:hover": {
-                              backgroundColor: "#DDE6ED",
-                              color: "#27374D",
-                            },
-                          }}
-                        >
-                          Update
-                        </Button>
+                        
                         <Button
                           variant="contained"
                           startIcon={<DeleteIcon />}
